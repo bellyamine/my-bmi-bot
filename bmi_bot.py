@@ -6,6 +6,10 @@ TOKEN = os.getenv("BOT_TOKEN")
 
 if not TOKEN:
     raise ValueError("لم يتم العثور على توكن البوت! تأكد من تعيين متغير البيئة BOT_TOKEN.")
+
+# تعريف الـ bot هنا (هذا هو السطر الذي كان ناقصاً)
+bot = telebot.TeleBot(TOKEN)
+
 # عندما يرسل المستخدم /start
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -23,7 +27,6 @@ def calculate_bmi(message):
         bmi = w / (h ** 2)
         bmi_rounded = round(bmi, 2)
         
-        # الشروط التي برمجناها سابقاً
         if bmi < 18.5:
             reply = f"{name}, النتيجة {bmi_rounded}: you are Underweight"
         elif 22 <= bmi <= 23:
