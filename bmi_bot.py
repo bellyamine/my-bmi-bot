@@ -1,9 +1,8 @@
 import telebot
+import os
 
-# ضع التوكن الخاص بك هنا
-TOKEN = "8748376830:AAEw2GTddYyA5pJpRJqr1w-BUwP_NtElrhI"
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 bot = telebot.TeleBot(TOKEN)
-
 # رسالة الترحيب عند الضغط على /start
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
