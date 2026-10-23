@@ -1,71 +1,46 @@
-import math
 import os
-
 import telebot
 
-TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-if not TOKEN:
-    raise SystemExit(
-        "Error: TELEGRAM_BOT_TOKEN is missing. Set it in your terminal before running the bot."
-    )
-
+# ضع التوكن الذي أعطاك إياه BotFather هنا بين القوسين
+TOKEN = ""
 bot = telebot.TeleBot(TOKEN)
 
-
-# Welcome message when the user sends /start
-@bot.message_handler(commands=["start"])
+# عندما يرسل المستخدم /start
+@bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(
-        message,
-        "مرحباً! أرسل وزنك وطولك هكذا (الوزن ثم الطول مفصولين بمسافة، مثلا: 70 1.75)",
-    )
+    bot.reply_to(message, "مرحباً بك في بوت حساب كتلة الجسم (BMI)! أرسل بياناتك بهذا الشكل:\nالوزن (كغ) الطول (بالمتر)\nمثال: 70 1.75")
 
-
-# Receive weight and height, then calculate BMI
+# استقبال الرسائل وحساب الـ BMI
 @bot.message_handler(func=lambda message: True)
 def calculate_bmi(message):
-    if not message.text:
-        bot.reply_to(message, "يرجى إرسال الوزن والطول كأرقام، مثال: 70 1.75")
-        return
-
-    parts = message.text.split()
-    if len(parts) != 2:
-        bot.reply_to(message, "يرجى إرسال رقمين فقط: الوزن ثم الطول، مثال: 70 1.75")
-        return
-
     try:
-        weight = float(parts[0])
-        height = float(parts[1])
-    except ValueError:
-        bot.reply_to(message, "خطأ! يرجى إرسال أرقام صحيحة، مثال: 70 1.75")
-        return
+        parts = message.text.split()
+        w = float(parts[0])
+        h = float(parts[1])
+        name = message.from_user.first_name
+        
+        bmi = w / (h ** 2)
+        bmi_rounded = round(bmi, 2)
+        
+        # الشروط التي برمجناها سابقاً
+        if bmi < 18.5:
+            reply = f"{name}, النتيجة {bmi_rounded}: you are Underweight"
+        elif 22 <= bmi <= 23:
+            reply = f"{name}, النتيجة {bmi_rounded}: You are absolutely perfect! 🔥"
+        elif 18.5 <= bmi <= 24.9:
+            reply = f"{name}, النتيجة {bmi_rounded}: you are Normal"
+        elif 25 <= bmi <= 29.9:
+            reply = f"{name}, النتيجة {bmi_rounded}: you are Overweight, do some sport bro"
+        elif 30 <= bmi <= 35:
+            reply = f"{name}, النتيجة {bmi_rounded}: you are obese, you need a Medical consultation"
+        else:
+            reply = f"{name}, النتيجة {bmi_rounded}: Fuck you 😂"
+            
+        bot.reply_to(message, reply)
+        
+    except Exception as e:
+        bot.reply_to(message, "خطأ في طريقة الإدخال! يرجى إرسال الوزن ثم الطول مفصولين بمسافة، مثل: 70 1.75")
 
-    if not math.isfinite(weight) or not math.isfinite(height) or weight <= 0 or height <= 0:
-        bot.reply_to(message, "يجب أن يكون الوزن والطول رقمين موجبين وصالحين.")
-        return
-
-    name = message.from_user.first_name or "User"
-    bmi = weight / height**2
-
-    bot.reply_to(message, f"Your BMI is: {round(bmi, 2)}")
-
-    # Keep the project's original playful response categories.
-    if bmi < 18.5:
-        bot.send_message(message.chat.id, f"{name} you are Underweight")
-    elif 22 <= bmi <= 23:
-        bot.send_message(message.chat.id, f"{name} You are absolutly perfect")
-    elif 18.5 <= bmi <= 24.9:
-        bot.send_message(message.chat.id, f"{name} you are Normal")
-    elif 25 <= bmi <= 29.9:
-        bot.send_message(message.chat.id, f"{name} you are Overweight, do some sport bro")
-    elif 30 <= bmi <= 35:
-        bot.send_message(
-            message.chat.id,
-            f"{name} you are obese, you need a Medical consultation",
-        )
-    else:
-        bot.send_message(message.chat.id, f"{name} Fuck you")
-
-
+# تشغيل البوت
 print("Bot is running...")
-bot.infinity_polling()
+bot.polling()
