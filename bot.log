@@ -1,0 +1,22 @@
+nohup: ignoring input
+Bot is running...
+Traceback (most recent call last):
+  File "/home/bellyamine/Desktop/bmi_calculator/bmi_bot.py", line 47, in <module>
+    bot.polling()
+  File "/home/bellyamine/.local/lib/python3.12/site-packages/telebot/__init__.py", line 1255, in polling
+    logger.info('Starting your bot with username: [@%s]', self.user.username)
+                                                          ^^^^^^^^^
+  File "/home/bellyamine/.local/lib/python3.12/site-packages/telebot/__init__.py", line 314, in user
+    self._user = self.get_me()
+                 ^^^^^^^^^^^^^
+  File "/home/bellyamine/.local/lib/python3.12/site-packages/telebot/__init__.py", line 1442, in get_me
+    apihelper.get_me(self.token)
+  File "/home/bellyamine/.local/lib/python3.12/site-packages/telebot/apihelper.py", line 218, in get_me
+    return _make_request(token, method_url)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bellyamine/.local/lib/python3.12/site-packages/telebot/apihelper.py", line 182, in _make_request
+    json_result = _check_result(method_name, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bellyamine/.local/lib/python3.12/site-packages/telebot/apihelper.py", line 211, in _check_result
+    raise ApiTelegramException(method_name, result, result_json)
+telebot.apihelper.ApiTelegramException: A request to the Telegram API was unsuccessful. Error code: 401. Description: Unauthorized
