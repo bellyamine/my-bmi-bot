@@ -1,10 +1,11 @@
 import os
 import telebot
 
-# ضع التوكن الذي أعطاك إياه BotFather هنا بين القوسين
-TOKEN = ""
-bot = telebot.TeleBot(TOKEN)
+# قراءة التوكن بأمان من متغيرات النظام في جهازك
+TOKEN = os.getenv("BOT_TOKEN")
 
+if not TOKEN:
+    raise ValueError("لم يتم العثور على توكن البوت! تأكد من تعيين متغير البيئة BOT_TOKEN.")
 # عندما يرسل المستخدم /start
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
