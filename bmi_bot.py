@@ -28,17 +28,17 @@ def calculate_bmi(message):
         bmi_rounded = round(bmi, 2)
         
         if bmi < 18.5:
-            reply = f"{name}, The result {bmi_rounded}: you are Underweight"
+            reply = f"{name}, Your BMI result {bmi_rounded}: you are Underweight"
         elif 22 <= bmi <= 23:
-            reply = f"{name}, The result {bmi_rounded}: You are absolutely perfect! 🔥"
+            reply = f"{name}, Your BMI result {bmi_rounded}: You are absolutely perfect! 🔥"
         elif 18.5 <= bmi <= 24.9:
-            reply = f"{name}, The result {bmi_rounded}: you are Normal"
+            reply = f"{name}, Your BMI result {bmi_rounded}: you are Normal"
         elif 25 <= bmi <= 29.9:
-            reply = f"{name}, The result {bmi_rounded}: you are Overweight, do some sport bro"
+            reply = f"{name}, Your BMI result {bmi_rounded}: you are Overweight, do some sport bro"
         elif 30 <= bmi <= 35:
-            reply = f"{name}, The result {bmi_rounded}: you are obese, you need a Medical consultation"
+            reply = f"{name}, Your BMI result {bmi_rounded}: you are obese, you need a Medical consultation"
         else:
-            reply = f"{name}, The result {bmi_rounded}: You need medical consultation quickly."
+            reply = f"{name}, Your BMI result {bmi_rounded}: You need medical consultation quickly."
             
         bot.reply_to(message, reply)
         
