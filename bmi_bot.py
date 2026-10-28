@@ -1,21 +1,21 @@
 import os
 import telebot
 
-# قراءة التوكن بأمان من متغيرات النظام في جهازك
+# Reading the token from the device (server)
 TOKEN = os.getenv("BOT_TOKEN")
 
 if not TOKEN:
-    raise ValueError("لم يتم العثور على توكن البوت! تأكد من تعيين متغير البيئة BOT_TOKEN.")
+    raise ValueError(" Bot token not found! Make sure to set the environment variable. BOT_TOKEN.")
 
-# تعريف الـ bot هنا (هذا هو السطر الذي كان ناقصاً)
+# bot Token
 bot = telebot.TeleBot(TOKEN)
 
-# عندما يرسل المستخدم /start
+# When the user sends /start
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "مرحباً بك في بوت حساب كتلة الجسم (BMI)! أرسل بياناتك بهذا الشكل:\nالوزن (كغ) الطول (بالمتر)\nمثال: 70 1.75")
+    bot.reply_to(message, "Welcome to the Body Mass Index (BMI) bot!\n Please send your details in the following format:\n Weight (kg) Height (in meters)\n Example: 70 1.75")
 
-# استقبال الرسائل وحساب الـ BMI
+# Receiving messages and calculating BMI
 @bot.message_handler(func=lambda message: True)
 def calculate_bmi(message):
     try:
@@ -43,8 +43,8 @@ def calculate_bmi(message):
         bot.reply_to(message, reply)
         
     except Exception as e:
-        bot.reply_to(message, "خطأ في طريقة الإدخال! يرجى إرسال الوزن ثم الطول مفصولين بمسافة، مثل: 70 1.75")
+        bot.reply_to(message, "Incorrect input format! Please enter your weight followed by your height, separated by a space—for example: 70 1.75")
 
-# تشغيل البوت
+# Run the bot
 print("Bot is running...")
 bot.polling()
