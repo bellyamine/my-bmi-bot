@@ -38,7 +38,7 @@ def calculate_bmi(message):
         elif 30 <= bmi <= 35:
             reply = f"{name}, The result {bmi_rounded}: you are obese, you need a Medical consultation"
         else:
-            reply = f"{name}, The result {bmi_rounded}: Fuck you bro"
+            reply = f"{name}, The result {bmi_rounded}: You need medical consultation quickly."
             
         bot.reply_to(message, reply)
         
