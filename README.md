@@ -33,3 +33,5 @@ Send `/start` to the bot, then send your weight in kilograms and height in metre
 ```
 
 The bot checks that both values are positive numbers. The BMI categories and messages are playful project behavior and should not be treated as medical advice.
+
+#### The results require a medical review.
